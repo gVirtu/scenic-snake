@@ -1,0 +1,5 @@
+%{
+  "elixir_make": {:hex, :elixir_make, "0.4.2", "332c649d08c18bc1ecc73b1befc68c647136de4f340b548844efc796405743bf", [:mix], [], "hexpm"},
+  "scenic": {:hex, :scenic, "0.8.0", "44bffa479383e1be5986a891c2597ef48ea47485d901c82f8c6bbb74770dcb9e", [:make, :mix], [{:elixir_make, "~> 0.4", [hex: :elixir_make, repo: "hexpm", optional: false]}], "hexpm"},
+  "scenic_driver_glfw": {:hex, :scenic_driver_glfw, "0.8.0", "710e02564f7d7ecb590cbed15521a90535f17cfbf9fe225c01237667e90f64e3", [:make, :mix], [{:elixir_make, "~> 0.4", [hex: :elixir_make, repo: "hexpm", optional: false]}, {:scenic, "~> 0.8", [hex: :scenic, repo: "hexpm", optional: false]}], "hexpm"},
+}
