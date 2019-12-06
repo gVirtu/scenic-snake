@@ -54,6 +54,7 @@ defmodule ScenicSnake.Scene.Game do
       frame_count: 1,
       frame_timer: timer,
       score: 0,
+      had_input: false,
       # Game objects
       objects: %{snake: %{body: [snake_start_coords],
                           size: @snake_starting_size,
@@ -85,7 +86,15 @@ defmodule ScenicSnake.Scene.Game do
     {:noreply, %{state | frame_count: frame_count + 1}}
   end
 
+  def do_nothing(state) do
+    state
+  end
+
   # Keyboard controls
+  def handle_input({:key, _}, _context, %{had_input: true} = state) do
+    {:noreply, do_nothing(state)}
+  end
+
   def handle_input({:key, {"left", :press, _}}, _context, state) do
     {:noreply, update_snake_direction(state, {-1, 0})}
   end
@@ -112,7 +121,7 @@ defmodule ScenicSnake.Scene.Game do
     if (direction in [{-old_x, 0}, {0, -old_y}]) do
       state
     else
-      put_in(state, [:objects, :snake, :direction], direction)
+      put_in(state, [:objects, :snake, :direction], direction) |> put_in([:had_input], true)
     end
   end
 
@@ -127,6 +136,7 @@ defmodule ScenicSnake.Scene.Game do
     |> maybe_eat_pellet(new_head_pos)
     |> maybe_die()
     |> put_in([:objects, :snake, :body], new_body)
+    |> put_in([:had_input], false)
   end
 
   defp move(%{tile_width: w, tile_height: h}, {pos_x, pos_y}, {vec_x, vec_y}) do
